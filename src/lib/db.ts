@@ -1,3 +1,4 @@
+import { cache } from "react";
 import fs from "fs";
 import path from "path";
 
@@ -32,10 +33,10 @@ export const getProducts = async (): Promise<Category[]> => {
   return db.products;
 };
 
-export const getCategoryById = async (id: string): Promise<Category | undefined> => {
+export const getCategoryById = cache(async (id: string): Promise<Category | undefined> => {
   const db = getDb();
   return db.categories.find((cat: Category) => cat.id === id);
-};
+});
 
 export const getProductsByCategory = async (
   category: string,

@@ -1,4 +1,5 @@
 import { getProductById } from "@/lib/db";
+import ProductSchema from "@/component/ProductSchema";
 
 import { notFound } from "next/navigation";
 
@@ -18,6 +19,18 @@ export default async function ProductDetailPage({
 
   return (
     <main className="category-container">
+      {/* Dữ liệu có cấu trúc (JSON-LD) giúp Google hiểu đây là trang sản phẩm,
+          có thể hiển thị rich result (giá, tình trạng còn hàng,...) trên kết quả tìm kiếm */}
+      <ProductSchema
+        product={{
+          id: product.id.toString(),
+          name: product.name,
+          images: "/hoa.jpg",
+          description: `Mẫu hoa ${product.name.toLowerCase()} được thiết kế tỉ mỉ bởi các thợ cắm hoa lành nghề tại Vũng Tàu.`,
+          price: product.price.toString(),
+        }}
+      />
+
       <div className="flex flex-col md:flex-row gap-10 mt-8">
         {/* Giả lập ảnh sản phẩm */}
         <div className="w-full md:w-1/2 aspect-square bg-gray-100 rounded-2xl flex items-center justify-center text-gray-400">
